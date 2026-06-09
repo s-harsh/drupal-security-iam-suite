@@ -1,0 +1,4 @@
+administer api flood guard:
+  title: 'Administer API Flood Guard'
+  description: 'Configure flood thresholds, manage IP allowlists, view flood state dashboard, and clear flood entries.'
+  restrict access: true

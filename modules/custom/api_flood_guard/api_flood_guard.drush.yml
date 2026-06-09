@@ -1,0 +1,3 @@
+drush:
+  commandfiles:
+    api_flood_guard: src/Drush/Commands/ApiFloodGuardCommands.php

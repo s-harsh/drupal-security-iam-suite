@@ -1,0 +1,25 @@
+protected_paths:
+  - path: /jsonapi
+    match: prefix
+  - path: /user/login
+    match: exact
+  - path: /oauth/token
+    match: exact
+  - path: /rest/user/login
+    match: exact
+ip_threshold: 100
+ip_window: 3600
+user_threshold: 20
+user_window: 900
+response_code: 429
+block_message: 'Too many authentication requests. Please wait before trying again.'
+allowlist: []
+reputation_providers:
+  enabled_provider: ''
+  abuseipdb:
+    api_key: ''
+    api_key_id: ''
+    threshold: 85
+    max_age_days: 30
+    cache_ttl: 3600
+debug_logging: false
