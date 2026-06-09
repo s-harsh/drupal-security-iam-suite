@@ -1,0 +1,26 @@
+{
+  "name": "drupal/hibp_password_guard",
+  "description": "Integrates the Have I Been Pwned Pwned Passwords API with Drupal Password Policy to reject compromised passwords using k-anonymity.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11 || ^10.4",
+    "drupal/password_policy": "^4.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^11 || ^10.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\hibp_password_guard\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}
