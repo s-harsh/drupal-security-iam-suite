@@ -1,0 +1,8 @@
+name: 'CSP Wizard SecKit Bridge'
+type: module
+description: 'Optional integration bridge that syncs the CSP Wizard generated policy into SecKit configuration, preventing duplicate Content-Security-Policy headers.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+dependencies:
+  - csp_wizard:csp_wizard
+  - seckit:seckit

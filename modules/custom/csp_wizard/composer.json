@@ -1,0 +1,23 @@
+{
+  "name": "drupal/csp_wizard",
+  "description": "Guided Content Security Policy wizard with nonce injection, violation reporting, and PCI DSS 6.4.3 compliance mode.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11 || ^10.4"
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "^7.0 — Required for optional SIEM webhook forwarding (already a Drupal core transitive dependency)."
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\csp_wizard\\": "src/"
+    }
+  },
+  "extra": {
+    "drupal": {
+      "version": "1.0.0",
+      "datestamp": "1749340800"
+    }
+  }
+}
