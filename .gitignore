@@ -1,0 +1,85 @@
+# ============================================================
+# Drupal Security & IAM Module Suite — .gitignore
+# ============================================================
+
+# Claude AI / Claude Code files
+.claude/
+.ai/
+*.ai
+.anthropic/
+MEMORY.md
+memory/
+
+# Claude workflow artifacts
+subagents/
+workflows/scripts/
+*.output
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-lock.yaml
+
+# Playwright test artifacts (keep specs, ignore results)
+playwright-report/
+test-results/
+.playwright/
+
+# PHP / Composer
+vendor/
+composer.lock
+
+# Drupal site files (if this repo is ever placed inside a Drupal install)
+sites/default/settings.php
+sites/default/settings.local.php
+sites/default/files/
+files/
+private/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+dist/
+build/
+/coverage/
+
+# Logs
+*.log
+logs/
+
+# Temp / Cache
+tmp/
+temp/
+.cache/
+*.tmp
+*.temp
