@@ -1,0 +1,22 @@
+{
+  "name": "drupal/api_flood_guard",
+  "description": "Protects API authentication endpoints against brute-force and credential-stuffing attacks with configurable flood controls and IP reputation integration.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11 || ^10.4"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Drupal\\api_flood_guard\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}

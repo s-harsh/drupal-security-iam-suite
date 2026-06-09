@@ -1,0 +1,20 @@
+api_flood_guard.settings:
+  title: 'API Flood Guard'
+  description: 'Configure API flood protection thresholds, allowlists, and IP reputation settings.'
+  parent: system.admin_config_security
+  route_name: api_flood_guard.settings
+  weight: 10
+
+api_flood_guard.flood_state:
+  title: 'Flood State'
+  description: 'View and manage active flood entries for API authentication paths.'
+  parent: api_flood_guard.settings
+  route_name: api_flood_guard.flood_state
+  weight: 10
+
+api_flood_guard.log:
+  title: 'Block Events Log'
+  description: 'View recent API flood block events.'
+  parent: api_flood_guard.settings
+  route_name: api_flood_guard.log
+  weight: 20
