@@ -23,11 +23,20 @@ jobs:
       - name: Detect changed modules
         id: changed
         run: |
-          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
-            | grep '^modules/custom/' \
-            | cut -d/ -f3 \
-            | sort -u \
-            | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          # On first push (new branch), github.event.before is all zeros — fall back to HEAD
+          BEFORE="${{ github.event.before }}"
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || [ -z "$BEFORE" ]; then
+            # New branch: compare against the merge base with main, or list all modules
+            CHANGED=$(find modules/custom -maxdepth 1 -mindepth 1 -type d \
+              | xargs -I{} basename {} \
+              | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          else
+            CHANGED=$(git diff --name-only "$BEFORE" "${{ github.sha }}" \
+              | grep '^modules/custom/' \
+              | cut -d/ -f3 \
+              | sort -u \
+              | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          fi
           echo "modules=$CHANGED" >> "$GITHUB_OUTPUT"
           echo "Changed modules: $CHANGED"
 
