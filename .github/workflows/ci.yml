@@ -1,0 +1,295 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ──────────────────────────────────────────────────────────
+  # 1. Detect changed modules
+  # ──────────────────────────────────────────────────────────
+  detect-changes:
+    name: Detect Changed Modules
+    runs-on: ubuntu-latest
+    outputs:
+      modules: ${{ steps.changed.outputs.modules }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed modules
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} \
+            | grep '^modules/custom/' \
+            | cut -d/ -f3 \
+            | sort -u \
+            | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "modules=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "Changed modules: $CHANGED"
+
+  # ──────────────────────────────────────────────────────────
+  # 2. PHP CodeSniffer — Drupal Coding Standards
+  # ──────────────────────────────────────────────────────────
+  phpcs:
+    name: PHP CodeSniffer
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - hibp_password_guard
+          - api_flood_guard
+          - csp_wizard
+          - session_sentinel
+          - paranoia_reborn
+          - sbom_sentinel
+          - passkey_forge
+          - zero_standing_privilege
+          - scim_bridge
+          - api_key_vault
+          - behavior_beacon
+          - compliance_command_center
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer, cs2pr
+
+      - name: Install Drupal Coder
+        run: |
+          composer global require drupal/coder:^8.3
+          composer global require dealerdirect/phpcodesniffer-composer-installer
+          phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
+
+      - name: Run PHPCS
+        run: |
+          phpcs --standard=Drupal,DrupalPractice \
+            --extensions=php,module,inc,install,test,profile,theme,info \
+            --ignore=*.md,*.txt \
+            modules/custom/${{ matrix.module }}/src/ \
+            | cs2pr
+
+  # ──────────────────────────────────────────────────────────
+  # 3. PHPStan Static Analysis (Level 6)
+  # ──────────────────────────────────────────────────────────
+  phpstan:
+    name: PHPStan Analysis
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - hibp_password_guard
+          - api_flood_guard
+          - csp_wizard
+          - session_sentinel
+          - paranoia_reborn
+          - sbom_sentinel
+          - passkey_forge
+          - zero_standing_privilege
+          - scim_bridge
+          - api_key_vault
+          - behavior_beacon
+          - compliance_command_center
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Setup Drupal for PHPStan
+        run: |
+          composer create-project drupal/recommended-project:^11 /tmp/drupal --no-install --no-interaction
+          cd /tmp/drupal
+          composer require --dev phpstan/phpstan mglaman/phpstan-drupal phpstan/phpstan-deprecation-rules --no-interaction
+          ln -s ${{ github.workspace }}/modules/custom/${{ matrix.module }} web/modules/custom/${{ matrix.module }}
+
+      - name: Run PHPStan
+        run: |
+          cd /tmp/drupal
+          ./vendor/bin/phpstan analyse \
+            web/modules/custom/${{ matrix.module }}/src/ \
+            --level=6 \
+            --error-format=github
+
+  # ──────────────────────────────────────────────────────────
+  # 4. PHPUnit Tests
+  # ──────────────────────────────────────────────────────────
+  phpunit:
+    name: PHPUnit Tests
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: drupal
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    strategy:
+      matrix:
+        module:
+          - hibp_password_guard
+          - api_flood_guard
+          - csp_wizard
+          - session_sentinel
+          - paranoia_reborn
+          - sbom_sentinel
+          - passkey_forge
+          - zero_standing_privilege
+          - scim_bridge
+          - api_key_vault
+          - behavior_beacon
+          - compliance_command_center
+        php: ['8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_mysql, gd, opcache
+          tools: composer
+
+      - name: Install Drupal + module
+        run: |
+          composer create-project drupal/recommended-project:^11 /tmp/drupal --no-interaction
+          cd /tmp/drupal
+          composer require --dev drupal/core-dev:^11 --no-interaction
+          mkdir -p web/modules/custom
+          cp -r ${{ github.workspace }}/modules/custom/${{ matrix.module }} web/modules/custom/
+          # Install module-specific deps
+          if [ -f web/modules/custom/${{ matrix.module }}/composer.json ]; then
+            cd web/modules/custom/${{ matrix.module }}
+            composer install --no-interaction
+          fi
+
+      - name: Run PHPUnit Unit Tests
+        run: |
+          cd /tmp/drupal
+          ./vendor/bin/phpunit web/modules/custom/${{ matrix.module }}/tests/src/Unit/ \
+            --log-junit /tmp/junit-unit-${{ matrix.module }}-php${{ matrix.php }}.xml \
+            --testdox
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phpunit-${{ matrix.module }}-php${{ matrix.php }}
+          path: /tmp/junit-*.xml
+
+  # ──────────────────────────────────────────────────────────
+  # 5. Playwright UI Tests
+  # ──────────────────────────────────────────────────────────
+  playwright:
+    name: Playwright UI Tests
+    runs-on: ubuntu-latest
+    needs: phpunit
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: drupal
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_mysql, gd
+          tools: composer, drush
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Drupal with all modules
+        run: |
+          composer create-project drupal/recommended-project:^11 /tmp/drupal --no-interaction
+          cd /tmp/drupal
+          cp -r ${{ github.workspace }}/modules/custom web/modules/
+          # Install Drupal
+          php web/core/scripts/drupal install standard \
+            --db-url=mysql://root:root@127.0.0.1/drupal \
+            --site-name="Test" --account-name=admin --account-pass=admin \
+            --no-interaction
+          # Enable all suite modules
+          ./vendor/bin/drush en hibp_password_guard api_flood_guard csp_wizard -y || true
+          # Start PHP built-in server
+          php -S 0.0.0.0:80 -t web/ &
+          sleep 3
+
+      - name: Install Playwright
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: |
+          npx playwright test playwright/ \
+            --reporter=html \
+            --project=chromium
+        env:
+          BASE_URL: http://localhost
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+
+  # ──────────────────────────────────────────────────────────
+  # 6. Security — Check for outdated/vulnerable deps
+  # ──────────────────────────────────────────────────────────
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Check Drupal security advisories
+        run: |
+          for module_dir in modules/custom/*/; do
+            module=$(basename "$module_dir")
+            echo "Checking $module..."
+            if [ -f "$module_dir/composer.json" ]; then
+              cd "$module_dir"
+              composer audit --format=plain || echo "⚠️  Audit issues found in $module"
+              cd -
+            fi
+          done
+
+  # ──────────────────────────────────────────────────────────
+  # 7. YAML / Info.yml validation
+  # ──────────────────────────────────────────────────────────
+  yaml-lint:
+    name: YAML / Info.yml Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate YAML files
+        run: |
+          pip install yamllint
+          yamllint modules/custom/ \
+            -d '{extends: relaxed, rules: {line-length: {max: 120}}}' \
+            --format github

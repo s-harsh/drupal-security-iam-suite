@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          NOTES=$(awk "/^## \[$VERSION\]/{flag=1; next} /^## \[/{flag=0} flag" MODULES_SUMMARY.md 2>/dev/null || echo "See CHANGELOG.md for details.")
+          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$NOTES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Release v${{ steps.version.outputs.version }}"
+          body: |
+            ## Drupal Security & IAM Module Suite v${{ steps.version.outputs.version }}
+
+            ### Modules Included
+            - HIBP Password Guard
+            - API Flood Guard
+            - CSP Wizard
+            - Session Sentinel
+            - Paranoia Reborn
+            - SBOM Sentinel
+            - Passkey Forge
+            - Zero Standing Privilege
+            - SCIM Bridge
+            - API Key Vault
+            - Behavior Beacon
+            - Compliance Command Center
+
+            ### Changes
+            ${{ steps.changelog.outputs.notes }}
+
+            ### Requirements
+            - Drupal 11.x or 10.4+
+            - PHP 8.2+
+            - Drupal CMS 2.0 compatible
+
+            ### Installation
+            ```bash
+            # Copy desired module to your Drupal installation
+            cp -r modules/custom/[module_name] /path/to/drupal/modules/custom/
+            drush en [module_name]
+            ```
+          draft: false
+          prerelease: ${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') || contains(github.ref, '-rc') }}
