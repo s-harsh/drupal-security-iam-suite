@@ -1,0 +1,53 @@
+services:
+  api_flood_guard.subscriber:
+    class: Drupal\api_flood_guard\EventSubscriber\ApiFloodSubscriber
+    arguments:
+      - '@api_flood_guard.flood_manager'
+      - '@api_flood_guard.endpoint_detector'
+      - '@config.factory'
+      - '@logger.channel.api_flood_guard'
+    tags:
+      - { name: event_subscriber }
+
+  api_flood_guard.endpoint_detector:
+    class: Drupal\api_flood_guard\Service\ApiEndpointDetector
+    arguments:
+      - '@config.factory'
+
+  api_flood_guard.flood_manager:
+    class: Drupal\api_flood_guard\Service\ApiFloodManager
+    arguments:
+      - '@flood'
+      - '@config.factory'
+      - '@logger.channel.api_flood_guard'
+      - '@plugin.manager.ip_reputation_provider'
+
+  plugin.manager.ip_reputation_provider:
+    class: Drupal\api_flood_guard\Plugin\Manager\IpReputationManager
+    arguments:
+      - 'Plugin/IpReputation'
+      - '@container.namespaces'
+      - '@module_handler'
+      - '@cache.discovery'
+      - 'Drupal\api_flood_guard\Contract\IpReputationProviderInterface'
+      - 'Drupal\api_flood_guard\Annotation\IpReputationProvider'
+
+  cache.api_flood_guard:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: ['@cache_factory', 'get']
+    arguments: [api_flood_guard]
+
+  logger.channel.api_flood_guard:
+    parent: logger.channel_base
+    arguments: ['api_flood_guard']
+
+  api_flood_guard.hooks:
+    class: Drupal\api_flood_guard\Hook\ApiFloodGuardHooks
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.api_flood_guard'
+      - '@database'
+    tags:
+      - { name: drupal.hook }

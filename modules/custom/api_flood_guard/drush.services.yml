@@ -1,0 +1,11 @@
+services:
+  api_flood_guard.drush_commands:
+    class: Drupal\api_flood_guard\Drush\Commands\ApiFloodGuardCommands
+    arguments:
+      - '@flood'
+      - '@database'
+      - '@config.factory'
+      - '@api_flood_guard.flood_manager'
+      - '@plugin.manager.ip_reputation_provider'
+    tags:
+      - { name: drush.command }

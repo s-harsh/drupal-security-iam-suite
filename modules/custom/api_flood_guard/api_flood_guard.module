@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @file
+ * API Flood Guard module — minimal procedural stub.
+ *
+ * All hook implementations live in the OOP hook class
+ * \Drupal\api_flood_guard\Hook\ApiFloodGuardHooks, discovered via the
+ * drupal.hook service tag in api_flood_guard.services.yml.
+ */
+
+declare(strict_types=1);

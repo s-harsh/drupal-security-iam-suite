@@ -1,0 +1,40 @@
+api_flood_guard.settings:
+  path: '/admin/config/security/api-flood-guard'
+  defaults:
+    _form: '\Drupal\api_flood_guard\Form\ApiFloodGuardSettingsForm'
+    _title: 'API Flood Guard Settings'
+  requirements:
+    _permission: 'administer api flood guard'
+  options:
+    _admin_route: true
+
+api_flood_guard.flood_state:
+  path: '/admin/config/security/api-flood-guard/flood-state'
+  defaults:
+    _form: '\Drupal\api_flood_guard\Form\ApiFloodStateForm'
+    _title: 'API Flood Guard — Flood State'
+  requirements:
+    _permission: 'administer api flood guard'
+  options:
+    _admin_route: true
+
+api_flood_guard.log:
+  path: '/admin/config/security/api-flood-guard/log'
+  defaults:
+    _controller: '\Drupal\api_flood_guard\Controller\ApiFloodStatusController::logPage'
+    _title: 'API Flood Guard — Recent Block Events'
+  requirements:
+    _permission: 'administer api flood guard'
+  options:
+    _admin_route: true
+
+api_flood_guard.flood_state.data:
+  path: '/admin/config/security/api-flood-guard/flood-state/data'
+  defaults:
+    _controller: '\Drupal\api_flood_guard\Controller\ApiFloodStatusController::floodStateData'
+    _title: ''
+  requirements:
+    _permission: 'administer api flood guard'
+    _format: json
+  options:
+    _admin_route: true
