@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * CSP Wizard module stub.
+ *
+ * All hook implementations are delegated to the OOP hooks class
+ * Drupal\csp_wizard\Hook\CspWizardHooks via the #[Hook] attribute system.
+ * This file remains minimal and delegates procedural hooks for full
+ * Drupal 11 compatibility.
+ */
+
+declare(strict_types=1);
+
+use Drupal\csp_wizard\Render\CspWizardInlineScript;
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function csp_wizard_page_attachments_alter(array &$attachments): void {
+  \Drupal::service('csp_wizard.hooks')->pageAttachmentsAlter($attachments);
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function csp_wizard_element_info_alter(array &$types): void {
+  if (isset($types['html_tag'])) {
+    $types['html_tag']['#pre_render'][] = [
+      CspWizardInlineScript::class,
+      'preRenderAddNonce',
+    ];
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function csp_wizard_help(string $route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match): string|array {
+  return \Drupal::service('csp_wizard.hooks')->help($route_name, $route_match);
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function csp_wizard_requirements(string $phase): array {
+  return \Drupal::service('csp_wizard.hooks')->requirements($phase);
+}

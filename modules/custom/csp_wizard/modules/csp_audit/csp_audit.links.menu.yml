@@ -1,0 +1,6 @@
+csp_audit.report:
+  title: 'CSP Audit Report'
+  description: 'View the CSP audit findings report showing modules that emit unsafe-inline patterns.'
+  route_name: csp_audit.report
+  parent: system.admin_reports
+  weight: 20

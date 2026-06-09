@@ -1,0 +1,24 @@
+services:
+
+  cache.csp_audit:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [csp_audit]
+
+  csp_audit.module_scanner:
+    class: Drupal\csp_audit\Scanner\ModuleScanner
+    arguments:
+      - '@module_handler'
+      - '@config.factory'
+      - '@cache.csp_audit'
+      - '@logger.channel.csp_wizard'
+
+  csp_audit.hooks:
+    class: Drupal\csp_audit\Hook\CspAuditHooks
+    arguments:
+      - '@csp_audit.module_scanner'
+      - '@config.factory'
+    tags:
+      - { name: drupal.hook }

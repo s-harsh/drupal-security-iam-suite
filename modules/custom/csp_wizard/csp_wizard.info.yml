@@ -1,0 +1,7 @@
+name: 'CSP Wizard'
+type: module
+description: 'Guided Content Security Policy wizard with nonce injection, violation reporting, and PCI DSS 6.4.3 compliance mode for Drupal 11 sites.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+configure: csp_wizard.settings
+dependencies: []

@@ -1,0 +1,290 @@
+csp_wizard.settings:
+  type: config_object
+  label: 'CSP Wizard settings'
+  mapping:
+    mode:
+      type: string
+      label: 'CSP mode (enforce or report_only)'
+    nonce_enabled:
+      type: boolean
+      label: 'Enable per-request nonce injection'
+    nonce_bits:
+      type: integer
+      label: 'Nonce entropy in bits (128, 192, or 256)'
+    nonce_fallback:
+      type: string
+      label: 'Fallback script-src value when nonce unavailable'
+    report_uri_enabled:
+      type: boolean
+      label: 'Enable on-site violation report endpoint'
+    report_uri_path:
+      type: string
+      label: 'Path of the report endpoint'
+    report_siem_url:
+      type: string
+      label: 'External SIEM webhook URL for violation forwarding'
+    flood_limit:
+      type: integer
+      label: 'Maximum violation reports per IP per flood window'
+    flood_window:
+      type: integer
+      label: 'Flood control window in seconds'
+    seckit_bridge_active:
+      type: boolean
+      label: 'Whether SecKit bridge has taken over header control'
+    services:
+      type: mapping
+      label: 'Third-party service toggles'
+      mapping:
+        ckeditor5:
+          type: boolean
+          label: 'Include CKEditor5 CSP directives'
+        gtm:
+          type: boolean
+          label: 'Include Google Tag Manager directives'
+        stripe:
+          type: boolean
+          label: 'Include Stripe.js directives'
+        youtube:
+          type: boolean
+          label: 'Include YouTube embed directives'
+        recaptcha_v2:
+          type: boolean
+          label: 'Include reCAPTCHA v2 directives'
+        recaptcha_v3:
+          type: boolean
+          label: 'Include reCAPTCHA v3 directives'
+        custom_domains:
+          type: sequence
+          label: 'Additional custom allowed origins'
+          sequence:
+            type: string
+            label: 'Domain or origin'
+    directives:
+      type: mapping
+      label: 'Extra CSP directive origins beyond service profiles'
+      mapping:
+        default_src:
+          type: sequence
+          label: 'Extra default-src origins'
+          sequence:
+            type: string
+        script_src:
+          type: sequence
+          label: 'Extra script-src origins'
+          sequence:
+            type: string
+        style_src:
+          type: sequence
+          label: 'Extra style-src origins'
+          sequence:
+            type: string
+        img_src:
+          type: sequence
+          label: 'Extra img-src origins'
+          sequence:
+            type: string
+        connect_src:
+          type: sequence
+          label: 'Extra connect-src origins'
+          sequence:
+            type: string
+        frame_src:
+          type: sequence
+          label: 'Extra frame-src origins'
+          sequence:
+            type: string
+        font_src:
+          type: sequence
+          label: 'Extra font-src origins'
+          sequence:
+            type: string
+        object_src:
+          type: sequence
+          label: 'object-src values'
+          sequence:
+            type: string
+        base_uri:
+          type: sequence
+          label: 'base-uri values'
+          sequence:
+            type: string
+        form_action:
+          type: sequence
+          label: 'form-action values'
+          sequence:
+            type: string
+        frame_ancestors:
+          type: sequence
+          label: 'frame-ancestors values'
+          sequence:
+            type: string
+        upgrade_insecure:
+          type: boolean
+          label: 'Include upgrade-insecure-requests directive'
+    pci_mode:
+      type: mapping
+      label: 'PCI DSS 6.4.3 compliance mode settings'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Enable PCI DSS compliance mode'
+        page_patterns:
+          type: sequence
+          label: 'URL path patterns for payment pages'
+          sequence:
+            type: string
+        export_format:
+          type: string
+          label: 'Script inventory export format (csv or json)'
+        trusted_types:
+          type: boolean
+          label: 'Add require-trusted-types-for directive'
+
+csp_wizard.payment_policy:
+  type: config_object
+  label: 'CSP Wizard payment page policy'
+  mapping:
+    directives:
+      type: mapping
+      label: 'Stricter directive overrides for payment pages'
+      mapping:
+        default_src:
+          type: sequence
+          label: 'default-src origins'
+          sequence:
+            type: string
+        script_src:
+          type: sequence
+          label: 'script-src origins'
+          sequence:
+            type: string
+        style_src:
+          type: sequence
+          label: 'style-src origins'
+          sequence:
+            type: string
+        img_src:
+          type: sequence
+          label: 'img-src origins'
+          sequence:
+            type: string
+        connect_src:
+          type: sequence
+          label: 'connect-src origins'
+          sequence:
+            type: string
+        frame_src:
+          type: sequence
+          label: 'frame-src origins'
+          sequence:
+            type: string
+        object_src:
+          type: sequence
+          label: 'object-src values'
+          sequence:
+            type: string
+        trusted_types_policy_names:
+          type: sequence
+          label: 'Trusted Types policy name allowlist'
+          sequence:
+            type: string
+
+csp_wizard.service_profiles:
+  type: config_object
+  label: 'CSP Wizard built-in service directive profiles'
+  mapping:
+    ckeditor5:
+      type: mapping
+      label: 'CKEditor5 profile'
+      mapping:
+        script_src:
+          type: sequence
+          label: 'script-src origins'
+          sequence:
+            type: string
+        style_src:
+          type: sequence
+          label: 'style-src origins'
+          sequence:
+            type: string
+    gtm:
+      type: mapping
+      label: 'Google Tag Manager profile'
+      mapping:
+        script_src:
+          type: sequence
+          label: 'script-src origins'
+          sequence:
+            type: string
+        connect_src:
+          type: sequence
+          label: 'connect-src origins'
+          sequence:
+            type: string
+    stripe:
+      type: mapping
+      label: 'Stripe.js profile'
+      mapping:
+        script_src:
+          type: sequence
+          label: 'script-src origins'
+          sequence:
+            type: string
+        frame_src:
+          type: sequence
+          label: 'frame-src origins'
+          sequence:
+            type: string
+        connect_src:
+          type: sequence
+          label: 'connect-src origins'
+          sequence:
+            type: string
+    youtube:
+      type: mapping
+      label: 'YouTube embed profile'
+      mapping:
+        frame_src:
+          type: sequence
+          label: 'frame-src origins'
+          sequence:
+            type: string
+        img_src:
+          type: sequence
+          label: 'img-src origins'
+          sequence:
+            type: string
+    recaptcha_v2:
+      type: mapping
+      label: 'reCAPTCHA v2 profile'
+      mapping:
+        script_src:
+          type: sequence
+          label: 'script-src origins'
+          sequence:
+            type: string
+        frame_src:
+          type: sequence
+          label: 'frame-src origins'
+          sequence:
+            type: string
+        style_src:
+          type: sequence
+          label: 'style-src origins'
+          sequence:
+            type: string
+    recaptcha_v3:
+      type: mapping
+      label: 'reCAPTCHA v3 profile'
+      mapping:
+        script_src:
+          type: sequence
+          label: 'script-src origins'
+          sequence:
+            type: string
+        connect_src:
+          type: sequence
+          label: 'connect-src origins'
+          sequence:
+            type: string

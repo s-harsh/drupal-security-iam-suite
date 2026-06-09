@@ -1,0 +1,10 @@
+services:
+
+  csp_wizard_seckit.bridge_subscriber:
+    class: Drupal\csp_wizard_seckit\EventSubscriber\CspSecKitBridgeSubscriber
+    arguments:
+      - '@config.factory'
+      - '@csp_wizard.policy_builder'
+      - '@module_handler'
+    tags:
+      - { name: event_subscriber }
