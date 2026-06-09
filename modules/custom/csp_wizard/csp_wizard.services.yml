@@ -1,0 +1,45 @@
+services:
+
+  logger.channel.csp_wizard:
+    parent: logger.channel_base
+    arguments: ['csp_wizard']
+
+  csp_wizard.nonce_generator:
+    class: Drupal\csp_wizard\Service\NonceGeneratorService
+    arguments:
+      - '@request_stack'
+
+  csp_wizard.policy_builder:
+    class: Drupal\csp_wizard\Service\CspPolicyBuilderService
+    arguments:
+      - '@config.factory'
+      - '@csp_wizard.nonce_generator'
+      - '@module_handler'
+      - '@messenger'
+
+  csp_wizard.violation_logger:
+    class: Drupal\csp_wizard\Service\CspViolationLogger
+    arguments:
+      - '@logger.channel.csp_wizard'
+      - '@config.factory'
+      - '@http_client'
+
+  csp_wizard.header_subscriber:
+    class: Drupal\csp_wizard\EventSubscriber\CspHeaderSubscriber
+    arguments:
+      - '@config.factory'
+      - '@csp_wizard.policy_builder'
+      - '@module_handler'
+      - '@logger.channel.csp_wizard'
+    tags:
+      - { name: event_subscriber }
+
+  csp_wizard.hooks:
+    class: Drupal\csp_wizard\Hook\CspWizardHooks
+    arguments:
+      - '@csp_wizard.nonce_generator'
+      - '@config.factory'
+      - '@module_handler'
+      - '@database'
+    tags:
+      - { name: drupal.hook }

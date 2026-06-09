@@ -1,0 +1,47 @@
+mode: report_only
+nonce_enabled: true
+nonce_bits: 256
+nonce_fallback: "'unsafe-inline'"
+report_uri_enabled: true
+report_uri_path: /csp-wizard/report
+report_siem_url: ''
+flood_limit: 60
+flood_window: 60
+seckit_bridge_active: false
+services:
+  ckeditor5: false
+  gtm: false
+  stripe: false
+  youtube: false
+  recaptcha_v2: false
+  recaptcha_v3: false
+  custom_domains: []
+directives:
+  default_src:
+    - "'self'"
+  script_src: []
+  style_src: []
+  img_src:
+    - "'self'"
+    - 'data:'
+  connect_src:
+    - "'self'"
+  frame_src: []
+  font_src:
+    - "'self'"
+  object_src:
+    - "'none'"
+  base_uri:
+    - "'self'"
+  form_action:
+    - "'self'"
+  frame_ancestors:
+    - "'none'"
+  upgrade_insecure: true
+pci_mode:
+  enabled: false
+  page_patterns:
+    - /checkout/**
+    - /cart/**
+  export_format: csv
+  trusted_types: false

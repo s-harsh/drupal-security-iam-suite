@@ -1,0 +1,30 @@
+csp_audit.report:
+  path: '/admin/reports/csp-audit'
+  defaults:
+    _controller: '\Drupal\csp_audit\Controller\CspAuditReportController::report'
+    _title: 'CSP Audit Report'
+  requirements:
+    _permission: 'administer csp audit'
+  options:
+    _admin_route: true
+
+csp_audit.rescan:
+  path: '/admin/reports/csp-audit/rescan'
+  defaults:
+    _controller: '\Drupal\csp_audit\Controller\CspAuditReportController::rescan'
+    _title: 'Re-scan Modules'
+  requirements:
+    _permission: 'administer csp audit'
+    _csrf_token: 'TRUE'
+  options:
+    _admin_route: true
+
+csp_audit.export:
+  path: '/admin/reports/csp-audit/export'
+  defaults:
+    _controller: '\Drupal\csp_audit\Controller\CspAuditReportController::exportCsv'
+    _title: 'Export CSP Audit Findings'
+  requirements:
+    _permission: 'administer csp audit'
+  options:
+    _admin_route: true

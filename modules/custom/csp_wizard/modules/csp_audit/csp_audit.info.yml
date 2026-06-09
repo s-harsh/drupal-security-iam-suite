@@ -1,0 +1,8 @@
+name: 'CSP Audit'
+type: module
+description: 'Scans enabled modules for unsafe-inline patterns and surfaces actionable security findings in an audit report.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+dependencies:
+  - csp_wizard:csp_wizard
+configure: csp_wizard.audit_allowlist

@@ -1,0 +1,27 @@
+csp_wizard.settings:
+  title: 'CSP Wizard'
+  description: 'Configure Content Security Policy settings, run the guided wizard, and manage violation reporting.'
+  route_name: csp_wizard.settings
+  parent: system.admin_config_security
+  weight: 10
+
+csp_wizard.wizard_link:
+  title: 'Run Policy Wizard'
+  description: 'Launch the six-step guided CSP policy wizard.'
+  route_name: csp_wizard.wizard
+  parent: csp_wizard.settings
+  weight: 5
+
+csp_wizard.pci_export_link:
+  title: 'PCI Script Inventory Export'
+  description: 'Export the script inventory for PCI DSS 6.4.3 compliance.'
+  route_name: csp_wizard.pci_export
+  parent: csp_wizard.settings
+  weight: 10
+
+csp_wizard.audit_allowlist_link:
+  title: 'Audit Known-Safe Allowlist'
+  description: 'Manage the list of modules marked as reviewed and safe.'
+  route_name: csp_wizard.audit_allowlist
+  parent: csp_wizard.settings
+  weight: 15
