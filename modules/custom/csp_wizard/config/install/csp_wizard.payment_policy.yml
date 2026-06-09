@@ -1,0 +1,19 @@
+directives:
+  default_src:
+    - "'self'"
+  script_src:
+    - "'self'"
+  style_src:
+    - "'self'"
+  img_src:
+    - "'self'"
+    - 'data:'
+  connect_src:
+    - "'self'"
+    - 'https://api.stripe.com'
+  frame_src:
+    - 'https://js.stripe.com'
+    - 'https://hooks.stripe.com'
+  object_src:
+    - "'none'"
+  trusted_types_policy_names: []

@@ -1,0 +1,49 @@
+ckeditor5:
+  script_src:
+    - "'self'"
+    - 'https://cdn.ckeditor.com'
+  style_src:
+    - "'self'"
+    - "'unsafe-inline'"
+
+gtm:
+  script_src:
+    - 'https://www.googletagmanager.com'
+    - 'https://www.google-analytics.com'
+  connect_src:
+    - 'https://www.google-analytics.com'
+    - 'https://analytics.google.com'
+    - 'https://stats.g.doubleclick.net'
+
+stripe:
+  script_src:
+    - 'https://js.stripe.com'
+  frame_src:
+    - 'https://js.stripe.com'
+    - 'https://hooks.stripe.com'
+  connect_src:
+    - 'https://api.stripe.com'
+
+youtube:
+  frame_src:
+    - 'https://www.youtube.com'
+    - 'https://www.youtube-nocookie.com'
+  img_src:
+    - 'https://i.ytimg.com'
+    - 'https://i3.ytimg.com'
+
+recaptcha_v2:
+  script_src:
+    - 'https://www.google.com'
+    - 'https://www.gstatic.com'
+  frame_src:
+    - 'https://www.google.com'
+  style_src:
+    - 'https://www.gstatic.com'
+
+recaptcha_v3:
+  script_src:
+    - 'https://www.google.com'
+    - 'https://www.gstatic.com'
+  connect_src:
+    - 'https://www.google.com'

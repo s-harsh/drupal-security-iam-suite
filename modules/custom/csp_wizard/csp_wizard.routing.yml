@@ -1,0 +1,73 @@
+csp_wizard.settings:
+  path: '/admin/config/security/csp-wizard'
+  defaults:
+    _form: '\Drupal\csp_wizard\Form\CspSettingsForm'
+    _title: 'CSP Wizard Settings'
+  requirements:
+    _permission: 'administer csp wizard'
+  options:
+    _admin_route: true
+
+csp_wizard.wizard:
+  path: '/admin/config/security/csp-wizard/wizard'
+  defaults:
+    _form: '\Drupal\csp_wizard\Form\CspWizardForm'
+    _title: 'CSP Policy Wizard'
+  requirements:
+    _permission: 'administer csp wizard'
+  options:
+    _admin_route: true
+
+csp_wizard.audit_allowlist:
+  path: '/admin/config/security/csp-wizard/audit-allowlist'
+  defaults:
+    _form: '\Drupal\csp_wizard\Form\CspAuditAllowlistForm'
+    _title: 'CSP Audit Known-Safe Allowlist'
+  requirements:
+    _permission: 'administer csp audit'
+  options:
+    _admin_route: true
+
+csp_wizard.report:
+  path: '/csp-wizard/report'
+  defaults:
+    _controller: '\Drupal\csp_wizard\Controller\CspReportController::receive'
+    _title: 'CSP Violation Report'
+  methods: [POST]
+  requirements:
+    _access: 'TRUE'
+  options:
+    _auth: []
+    no_cache: TRUE
+
+csp_wizard.report_info:
+  path: '/csp-wizard/report'
+  defaults:
+    _controller: '\Drupal\csp_wizard\Controller\CspReportController::info'
+    _title: 'CSP Reporting Endpoint'
+  methods: [GET]
+  requirements:
+    _permission: 'view csp violations'
+  options:
+    _admin_route: true
+
+csp_wizard.toggle_mode:
+  path: '/admin/config/security/csp-wizard/toggle-mode'
+  defaults:
+    _controller: '\Drupal\csp_wizard\Controller\CspSettingsController::toggleMode'
+    _title: 'Toggle CSP Mode'
+  requirements:
+    _permission: 'administer csp wizard'
+    _csrf_token: 'TRUE'
+  options:
+    _admin_route: true
+
+csp_wizard.pci_export:
+  path: '/admin/config/security/csp-wizard/pci-export'
+  defaults:
+    _controller: '\Drupal\csp_wizard\Controller\CspPciExportController::export'
+    _title: 'PCI Script Inventory Export'
+  requirements:
+    _permission: 'administer csp wizard'
+  options:
+    _admin_route: true

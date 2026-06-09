@@ -1,0 +1,13 @@
+administer csp wizard:
+  title: 'Administer CSP Wizard'
+  description: 'Configure CSP Wizard settings, run the policy wizard, and manage PCI DSS compliance mode.'
+  restrict access: true
+
+view csp violations:
+  title: 'View CSP violations'
+  description: 'View the CSP violation log report without configuration access.'
+
+administer csp audit:
+  title: 'Administer CSP Audit'
+  description: 'Access the CSP Audit report, run re-scans, and manage the known-safe module allowlist.'
+  restrict access: true
