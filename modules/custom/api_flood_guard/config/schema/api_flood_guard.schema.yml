@@ -1,0 +1,68 @@
+api_flood_guard.settings:
+  type: config_object
+  label: 'API Flood Guard settings'
+  mapping:
+    protected_paths:
+      type: sequence
+      label: 'Protected API paths'
+      sequence:
+        type: mapping
+        mapping:
+          path:
+            type: string
+            label: 'Path'
+          match:
+            type: string
+            label: 'Match type (prefix or exact)'
+    ip_threshold:
+      type: integer
+      label: 'Per-IP attempt threshold'
+    ip_window:
+      type: integer
+      label: 'Per-IP time window in seconds'
+    user_threshold:
+      type: integer
+      label: 'Per-username attempt threshold'
+    user_window:
+      type: integer
+      label: 'Per-username time window in seconds'
+    response_code:
+      type: integer
+      label: 'HTTP response code for blocked requests (429 or 503)'
+    block_message:
+      type: string
+      label: 'Block response detail message'
+    allowlist:
+      type: sequence
+      label: 'IP allowlist in CIDR notation'
+      sequence:
+        type: string
+    reputation_providers:
+      type: mapping
+      label: 'IP reputation provider settings'
+      mapping:
+        enabled_provider:
+          type: string
+          label: 'Active provider plugin ID (empty string to disable)'
+        abuseipdb:
+          type: mapping
+          label: 'AbuseIPDB provider settings'
+          mapping:
+            api_key:
+              type: string
+              label: 'AbuseIPDB v2 API key (use Key module in production)'
+            api_key_id:
+              type: string
+              label: 'Key module entity ID (overrides api_key when Key module is present)'
+            threshold:
+              type: integer
+              label: 'Confidence score threshold 0-100 (block if score >= threshold)'
+            max_age_days:
+              type: integer
+              label: 'Maximum report age in days for AbuseIPDB query'
+            cache_ttl:
+              type: integer
+              label: 'Per-IP AbuseIPDB response cache TTL in seconds'
+    debug_logging:
+      type: boolean
+      label: 'Enable debug-level logging for allowed requests'

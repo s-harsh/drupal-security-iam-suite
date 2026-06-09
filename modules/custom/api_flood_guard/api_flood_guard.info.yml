@@ -1,0 +1,7 @@
+name: 'API Flood Guard'
+type: module
+description: 'Protects API authentication endpoints (JSON:API, REST, OAuth) against brute-force and credential-stuffing attacks with configurable per-IP and per-username flood controls, IP reputation integration, and an admin dashboard.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+dependencies: []
+configure: api_flood_guard.settings

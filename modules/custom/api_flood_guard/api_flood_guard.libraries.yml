@@ -1,0 +1,7 @@
+flood_state_refresh:
+  version: VERSION
+  js:
+    js/flood-state-refresh.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
