@@ -1,0 +1,8 @@
+name: 'Session Sentinel'
+type: module
+description: 'Unified session security module: idle timeout with JS warning, concurrent session limiting, device fingerprint binding, and admin session dashboard. Replaces session_limit, session_expire, and user_protect.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+dependencies:
+  - drupal:user
+configure: session_sentinel.settings

@@ -1,0 +1,41 @@
+services:
+  session_sentinel.manager:
+    class: Drupal\session_sentinel\Service\SessionSentinelManager
+    arguments:
+      - '@database'
+      - '@config.factory'
+      - '@logger.channel.session_sentinel'
+      - '@session_handler'
+      - '@current_user'
+    tags: []
+
+  session_sentinel.device_fingerprint:
+    class: Drupal\session_sentinel\Service\DeviceFingerprintService
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.session_sentinel'
+
+  session_sentinel.timeout_subscriber:
+    class: Drupal\session_sentinel\EventSubscriber\SessionTimeoutSubscriber
+    arguments:
+      - '@session_sentinel.manager'
+      - '@session_sentinel.device_fingerprint'
+      - '@config.factory'
+      - '@current_user'
+      - '@logger.channel.session_sentinel'
+      - '@messenger'
+    tags:
+      - { name: event_subscriber }
+
+  logger.channel.session_sentinel:
+    parent: logger.channel_base
+    arguments: ['session_sentinel']
+
+  session_sentinel.hooks:
+    class: Drupal\session_sentinel\Hook\SessionSentinelHooks
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.session_sentinel'
+      - '@session_sentinel.manager'
+    tags:
+      - { name: drupal.hook }

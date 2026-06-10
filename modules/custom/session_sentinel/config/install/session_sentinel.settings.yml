@@ -1,0 +1,8 @@
+idle_timeout: 1800
+warning_lead_time: 300
+role_timeouts: {}
+max_concurrent_sessions: 3
+exempt_admins_from_limit: true
+enable_device_binding: true
+kill_on_device_change: false
+prune_age: 604800

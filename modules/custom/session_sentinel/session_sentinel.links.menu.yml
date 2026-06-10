@@ -1,0 +1,13 @@
+session_sentinel.settings:
+  title: 'Session Sentinel'
+  description: 'Configure idle timeout, concurrent session limits, and device binding for user sessions.'
+  parent: system.admin_config_security
+  route_name: session_sentinel.settings
+  weight: 15
+
+session_sentinel.dashboard:
+  title: 'Active Sessions'
+  description: 'View all active user sessions and kill individual sessions.'
+  parent: session_sentinel.settings
+  route_name: session_sentinel.dashboard
+  weight: 10

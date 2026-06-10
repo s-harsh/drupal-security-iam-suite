@@ -1,0 +1,41 @@
+session_sentinel.settings:
+  path: '/admin/config/security/session-sentinel'
+  defaults:
+    _form: '\Drupal\session_sentinel\Form\SessionSentinelSettingsForm'
+    _title: 'Session Sentinel Settings'
+  requirements:
+    _permission: 'administer session sentinel'
+  options:
+    _admin_route: true
+
+session_sentinel.dashboard:
+  path: '/admin/config/security/session-sentinel/dashboard'
+  defaults:
+    _controller: '\Drupal\session_sentinel\Controller\SessionDashboardController::dashboardPage'
+    _title: 'Session Sentinel — Active Sessions'
+  requirements:
+    _permission: 'administer session sentinel'
+  options:
+    _admin_route: true
+
+session_sentinel.kill:
+  path: '/admin/config/security/session-sentinel/kill/{session_id}'
+  defaults:
+    _controller: '\Drupal\session_sentinel\Controller\SessionDashboardController::killSession'
+    _title: 'Kill Session'
+  requirements:
+    _permission: 'administer session sentinel'
+    _csrf_token: 'true'
+  options:
+    _admin_route: true
+
+session_sentinel.dashboard_data:
+  path: '/admin/config/security/session-sentinel/dashboard/data'
+  defaults:
+    _controller: '\Drupal\session_sentinel\Controller\SessionDashboardController::dashboardData'
+    _title: ''
+  requirements:
+    _permission: 'administer session sentinel'
+    _format: json
+  options:
+    _admin_route: true

@@ -1,0 +1,30 @@
+session_sentinel.settings:
+  type: config_object
+  label: 'Session Sentinel settings'
+  mapping:
+    idle_timeout:
+      type: integer
+      label: 'Global idle session timeout in seconds (0 = disabled)'
+    warning_lead_time:
+      type: integer
+      label: 'Seconds before expiry to show the JS countdown warning'
+    role_timeouts:
+      type: sequence
+      label: 'Per-role idle timeout overrides (keyed by role machine name, value in seconds; 0 = use global)'
+      sequence:
+        type: integer
+    max_concurrent_sessions:
+      type: integer
+      label: 'Maximum concurrent sessions per user (0 = unlimited)'
+    exempt_admins_from_limit:
+      type: boolean
+      label: 'Exempt uid=1 and users with administer users permission from concurrent session limit'
+    enable_device_binding:
+      type: boolean
+      label: 'Enable device fingerprint anomaly detection'
+    kill_on_device_change:
+      type: boolean
+      label: 'Kill session immediately on device fingerprint change (if false, only flag and log)'
+    prune_age:
+      type: integer
+      label: 'Age in seconds after which stale sentinel records are pruned by drush session-sentinel:prune (default 7 days)'

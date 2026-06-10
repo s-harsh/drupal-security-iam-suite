@@ -1,0 +1,10 @@
+session_timeout_warning:
+  version: VERSION
+  js:
+    js/session-timeout-warning.js:
+      attributes:
+        defer: true
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once

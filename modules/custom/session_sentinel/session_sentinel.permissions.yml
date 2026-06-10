@@ -1,0 +1,4 @@
+administer session sentinel:
+  title: 'Administer Session Sentinel'
+  description: 'Configure session timeout, concurrent session limits, device binding, view and kill active sessions.'
+  restrict access: true

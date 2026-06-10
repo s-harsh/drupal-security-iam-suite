@@ -1,0 +1,9 @@
+services:
+  session_sentinel.drush_commands:
+    class: Drupal\session_sentinel\Drush\Commands\SessionSentinelCommands
+    arguments:
+      - '@session_sentinel.manager'
+      - '@database'
+      - '@config.factory'
+    tags:
+      - { name: drush.command }

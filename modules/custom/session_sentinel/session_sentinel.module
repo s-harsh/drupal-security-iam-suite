@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @file
+ * Session Sentinel module — minimal procedural stub.
+ *
+ * All hook implementations live in the OOP hook class
+ * \Drupal\session_sentinel\Hook\SessionSentinelHooks, discovered via the
+ * drupal.hook service tag in session_sentinel.services.yml.
+ */
+
+declare(strict_types=1);

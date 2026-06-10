@@ -1,0 +1,119 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Session Sentinel module.
+ *
+ * Creates the session_sentinel_sessions table which stores per-session
+ * metadata including device fingerprint, last-active timestamp, and the
+ * session ID hash needed to correlate records with Drupal's sessions table.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function session_sentinel_schema(): array {
+  $schema['session_sentinel_sessions'] = [
+    'description' => 'Stores session metadata for idle timeout enforcement, concurrent session limiting, and device fingerprint binding.',
+    'fields' => [
+      'id' => [
+        'description' => 'Auto-increment primary key.',
+        'type'        => 'serial',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+      ],
+      'uid' => [
+        'description' => 'The {users}.uid of the session owner.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'session_id_hash' => [
+        'description' => 'SHA-256 hash of the PHP session ID. Used to look up and invalidate a session without exposing the raw ID.',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'device_fingerprint' => [
+        'description' => 'SHA-256 fingerprint derived from User-Agent and /24 IP subnet.',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'ip_address' => [
+        'description' => 'The client IP address recorded at session creation.',
+        'type'        => 'varchar',
+        'length'      => 45,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'user_agent' => [
+        'description' => 'The User-Agent string recorded at session creation (truncated to 512 characters).',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'created' => [
+        'description' => 'Unix timestamp when this session metadata record was created.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'last_active' => [
+        'description' => 'Unix timestamp of the last recorded request for this session.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'flagged_device_change' => [
+        'description' => 'Boolean flag (1/0) indicating an anomalous device fingerprint change was detected for this session.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+    'unique keys' => [
+      'session_id_hash' => ['session_id_hash'],
+    ],
+    'indexes' => [
+      'uid'         => ['uid'],
+      'last_active' => ['last_active'],
+      'uid_last_active' => ['uid', 'last_active'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function session_sentinel_install(): void {
+  \Drupal::logger('session_sentinel')->info(
+    'Session Sentinel installed. Navigate to /admin/config/security/session-sentinel to configure idle timeout, concurrent session limits, and device fingerprint binding.'
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function session_sentinel_uninstall(): void {
+  \Drupal::configFactory()
+    ->getEditable('session_sentinel.settings')
+    ->delete();
+
+  \Drupal::logger('session_sentinel')->info(
+    'Session Sentinel uninstalled. Configuration and session metadata table have been removed.'
+  );
+}

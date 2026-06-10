@@ -1,0 +1,22 @@
+{
+  "name": "drupal/session_sentinel",
+  "description": "Unified session security module combining idle timeout, concurrent session limiting, and device fingerprint binding in a single Drupal 11 module.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11 || ^10.4"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Drupal\\session_sentinel\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}
