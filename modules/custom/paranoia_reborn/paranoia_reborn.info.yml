@@ -1,0 +1,8 @@
+name: 'Paranoia Reborn'
+type: module
+description: 'Modern security hardening module: blocks admin paths for unprivileged roles, disables the PHP filter, hides Field UI and Views UI from non-developers, and provides configurable lockdown profiles with audit logging.'
+core_version_requirement: ^11
+package: Security
+configure: paranoia_reborn.settings
+dependencies:
+  - drupal:dblog

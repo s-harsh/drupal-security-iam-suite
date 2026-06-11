@@ -1,0 +1,43 @@
+paranoia_reborn.settings:
+  type: config_object
+  label: 'Paranoia Reborn settings'
+  mapping:
+    lockdown_profile:
+      type: string
+      label: 'Active lockdown profile'
+      constraints:
+        Choice:
+          choices: [strict, balanced, custom]
+    trusted_roles:
+      type: sequence
+      label: 'Trusted (developer) roles'
+      sequence:
+        type: string
+        label: 'Role ID'
+    admin_path_allowlist_roles:
+      type: sequence
+      label: 'Roles allowed to access /admin/* (custom profile only)'
+      sequence:
+        type: string
+        label: 'Role ID'
+    admin_path_restriction:
+      type: boolean
+      label: 'Restrict /admin/* paths'
+    disable_php_filter:
+      type: boolean
+      label: 'Disable PHP filter module'
+    field_ui_restriction:
+      type: boolean
+      label: 'Restrict Field UI routes'
+    views_ui_restriction:
+      type: boolean
+      label: 'Restrict Views UI routes'
+    admin_path_exceptions:
+      type: sequence
+      label: 'Admin path exceptions (always accessible to authenticated users)'
+      sequence:
+        type: string
+        label: 'Path'
+    audit_log_enabled:
+      type: boolean
+      label: 'Write audit log entries to dblog'

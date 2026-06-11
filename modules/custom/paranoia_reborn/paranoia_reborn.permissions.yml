@@ -1,0 +1,9 @@
+administer paranoia reborn:
+  title: 'Administer Paranoia Reborn'
+  description: 'Configure lockdown profiles, allowlists, and view audit logs.'
+  restrict access: true
+
+bypass paranoia reborn restrictions:
+  title: 'Bypass Paranoia Reborn restrictions'
+  description: 'Exempts the user from all admin-path, Field UI, and Views UI access controls enforced by Paranoia Reborn. Grant only to trusted developer roles.'
+  restrict access: true

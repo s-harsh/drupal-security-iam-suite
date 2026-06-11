@@ -1,0 +1,13 @@
+paranoia_reborn.settings:
+  title: 'Paranoia Reborn'
+  description: 'Configure security hardening, lockdown profiles, and admin-path restrictions.'
+  route_name: paranoia_reborn.settings
+  parent: system.admin_config_security
+  weight: 10
+
+paranoia_reborn.audit_log:
+  title: 'Paranoia Reborn Audit Log'
+  description: 'View blocked-access attempts logged by Paranoia Reborn.'
+  route_name: paranoia_reborn.audit_log
+  parent: system.admin_reports
+  weight: 10
