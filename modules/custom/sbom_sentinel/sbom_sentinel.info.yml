@@ -1,0 +1,9 @@
+name: 'SBOM Sentinel'
+type: module
+description: 'Supply chain security for Drupal. Generates CycloneDX 1.6 JSON/XML SBOMs from installed components, checks them against OSV.dev for known CVEs, and produces NIS2 Article 21 compliance risk reports.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+dependencies:
+  - drupal:system
+  - drupal:user
+configure: sbom_sentinel.settings

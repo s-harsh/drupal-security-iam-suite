@@ -1,0 +1,39 @@
+sbom_sentinel.settings:
+  path: '/admin/config/security/sbom-sentinel'
+  defaults:
+    _form: '\Drupal\sbom_sentinel\Form\SbomSentinelSettingsForm'
+    _title: 'SBOM Sentinel Settings'
+  requirements:
+    _permission: 'administer sbom sentinel'
+  options:
+    _admin_route: true
+
+sbom_sentinel.report:
+  path: '/admin/reports/sbom-sentinel'
+  defaults:
+    _controller: '\Drupal\sbom_sentinel\Controller\SbomReportController::reportPage'
+    _title: 'SBOM Sentinel — Component Risk Report'
+  requirements:
+    _permission: 'view sbom sentinel report'
+  options:
+    _admin_route: true
+
+sbom_sentinel.export.json:
+  path: '/admin/reports/sbom-sentinel/export/json'
+  defaults:
+    _controller: '\Drupal\sbom_sentinel\Controller\SbomExportController::exportJson'
+    _title: 'Export SBOM as JSON'
+  requirements:
+    _permission: 'export sbom sentinel'
+  options:
+    _admin_route: true
+
+sbom_sentinel.export.xml:
+  path: '/admin/reports/sbom-sentinel/export/xml'
+  defaults:
+    _controller: '\Drupal\sbom_sentinel\Controller\SbomExportController::exportXml'
+    _title: 'Export SBOM as XML'
+  requirements:
+    _permission: 'export sbom sentinel'
+  options:
+    _admin_route: true

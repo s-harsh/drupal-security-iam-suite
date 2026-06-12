@@ -1,0 +1,9 @@
+services:
+  sbom_sentinel.drush_commands:
+    class: Drupal\sbom_sentinel\Drush\Commands\SbomSentinelCommands
+    arguments:
+      - '@sbom_sentinel.sbom_generator'
+      - '@config.factory'
+      - '@logger.channel.sbom_sentinel'
+    tags:
+      - { name: drush.command }

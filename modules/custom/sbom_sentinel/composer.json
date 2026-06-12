@@ -1,0 +1,25 @@
+{
+  "name": "drupal/sbom_sentinel",
+  "description": "Supply chain security for Drupal. Generates CycloneDX 1.6 SBOMs, checks OSV.dev for CVEs, and produces NIS2 Article 21 risk reports.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11 || ^10.4",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^11 || ^10.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\sbom_sentinel\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}

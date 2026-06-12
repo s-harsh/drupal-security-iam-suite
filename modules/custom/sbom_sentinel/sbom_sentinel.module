@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * SBOM Sentinel module.
+ *
+ * Generates CycloneDX 1.6 SBOMs from installed Drupal components, checks them
+ * against OSV.dev for known CVEs, and provides NIS2 Article 21 risk reports.
+ * All hook logic is delegated to the OOP hooks class via the Drupal 11 #[Hook]
+ * attribute system.
+ */
+
+declare(strict_types=1);
