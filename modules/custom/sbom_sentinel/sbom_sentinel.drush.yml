@@ -1,0 +1,3 @@
+drush:
+  paths:
+    - src/Drush/Commands

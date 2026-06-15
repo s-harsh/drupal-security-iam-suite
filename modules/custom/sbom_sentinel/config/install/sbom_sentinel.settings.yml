@@ -1,0 +1,8 @@
+enabled: true
+composer_lock_path: '../composer.lock'
+osv_api_base_url: 'https://api.osv.dev/v1'
+http_timeout: 10
+cron_enabled: true
+email_report_enabled: false
+email_recipient: ''
+scan_cache_ttl: 3600

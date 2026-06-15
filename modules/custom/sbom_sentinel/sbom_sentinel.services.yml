@@ -1,0 +1,41 @@
+services:
+
+  logger.channel.sbom_sentinel:
+    parent: logger.channel_base
+    arguments: ['sbom_sentinel']
+
+  cache.sbom_sentinel:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [sbom_sentinel]
+
+  sbom_sentinel.osv_api_client:
+    class: Drupal\sbom_sentinel\Service\OsvApiClient
+    arguments:
+      - '@http_client'
+      - '@config.factory'
+      - '@logger.channel.sbom_sentinel'
+
+  sbom_sentinel.nis_risk_scorer:
+    class: Drupal\sbom_sentinel\Service\NisRiskScorer
+    arguments: []
+
+  sbom_sentinel.sbom_generator:
+    class: Drupal\sbom_sentinel\Service\SbomGenerator
+    arguments:
+      - '@sbom_sentinel.osv_api_client'
+      - '@sbom_sentinel.nis_risk_scorer'
+      - '@config.factory'
+      - '@cache.sbom_sentinel'
+      - '@logger.channel.sbom_sentinel'
+
+  sbom_sentinel.hooks:
+    class: Drupal\sbom_sentinel\Hook\SbomSentinelHooks
+    arguments:
+      - '@sbom_sentinel.sbom_generator'
+      - '@config.factory'
+      - '@logger.channel.sbom_sentinel'
+    tags:
+      - { name: drupal.hook }

@@ -1,0 +1,14 @@
+administer sbom sentinel:
+  title: 'Administer SBOM Sentinel'
+  description: 'Configure SBOM Sentinel settings including OSV API options, cron schedule, and email reporting.'
+  restrict access: true
+
+view sbom sentinel report:
+  title: 'View SBOM Sentinel risk report'
+  description: 'Access the component risk report showing CVE counts, severity badges, and OSV links.'
+  restrict access: true
+
+export sbom sentinel:
+  title: 'Export SBOM Sentinel data'
+  description: 'Download CycloneDX 1.6 SBOM as JSON or XML.'
+  restrict access: true

@@ -1,0 +1,28 @@
+sbom_sentinel.settings:
+  type: config_object
+  label: 'SBOM Sentinel settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Module enabled'
+    composer_lock_path:
+      type: string
+      label: 'Path to composer.lock relative to Drupal root'
+    osv_api_base_url:
+      type: string
+      label: 'OSV.dev API base URL'
+    http_timeout:
+      type: integer
+      label: 'HTTP request timeout in seconds'
+    cron_enabled:
+      type: boolean
+      label: 'Enable weekly cron scan'
+    email_report_enabled:
+      type: boolean
+      label: 'Send email report after cron scan'
+    email_recipient:
+      type: string
+      label: 'Email address to receive the cron scan report'
+    scan_cache_ttl:
+      type: integer
+      label: 'OSV scan result cache TTL in seconds'

@@ -1,0 +1,13 @@
+sbom_sentinel.settings:
+  title: 'SBOM Sentinel'
+  description: 'Configure supply chain security scanning and NIS2 compliance reporting.'
+  route_name: sbom_sentinel.settings
+  parent: system.admin_config_security
+  weight: 20
+
+sbom_sentinel.report:
+  title: 'SBOM Sentinel Report'
+  description: 'View component CVE risk report with NIS2 severity ratings.'
+  route_name: sbom_sentinel.report
+  parent: system.admin_reports
+  weight: 20
