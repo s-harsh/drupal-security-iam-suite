@@ -1,0 +1,42 @@
+services:
+
+  logger.channel.paranoia_reborn:
+    parent: logger.channel_base
+    arguments: ['paranoia_reborn']
+
+  paranoia_reborn.path_restrictor:
+    class: Drupal\paranoia_reborn\Service\PathRestrictor
+    arguments:
+      - '@config.factory'
+      - '@current_user'
+      - '@logger.channel.paranoia_reborn'
+
+  paranoia_reborn.module_hardener:
+    class: Drupal\paranoia_reborn\Service\ModuleHardener
+    arguments:
+      - '@config.factory'
+      - '@module_handler'
+      - '@module_installer'
+      - '@logger.channel.paranoia_reborn'
+
+  paranoia_reborn.access_control_subscriber:
+    class: Drupal\paranoia_reborn\EventSubscriber\AccessControlSubscriber
+    arguments:
+      - '@paranoia_reborn.path_restrictor'
+      - '@current_user'
+      - '@logger.channel.paranoia_reborn'
+      - '@config.factory'
+      - '@request_stack'
+    tags:
+      - { name: event_subscriber }
+
+  paranoia_reborn.hooks:
+    class: Drupal\paranoia_reborn\Hook\ParanoiaRebornHooks
+    arguments:
+      - '@config.factory'
+      - '@paranoia_reborn.module_hardener'
+      - '@current_user'
+      - '@module_handler'
+      - '@database'
+    tags:
+      - { name: drupal.hook }

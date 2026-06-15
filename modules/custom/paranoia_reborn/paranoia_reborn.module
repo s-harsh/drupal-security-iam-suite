@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Paranoia Reborn — security hardening for Drupal 11.
+ *
+ * All hook logic lives in \Drupal\paranoia_reborn\Hook\ParanoiaRebornHooks
+ * via #[Hook] attributes. This file intentionally contains no procedural code.
+ */

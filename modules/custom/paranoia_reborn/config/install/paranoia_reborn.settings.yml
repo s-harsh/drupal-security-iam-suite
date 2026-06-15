@@ -1,0 +1,37 @@
+# Default configuration for Paranoia Reborn.
+# Profile: balanced — sensible defaults that block the highest-risk vectors
+# without disrupting a normal site editorial workflow.
+
+lockdown_profile: balanced
+
+# Roles whose members are always treated as trusted developers and bypass all
+# Paranoia Reborn restrictions (in addition to uid=1 and roles carrying the
+# "bypass paranoia reborn restrictions" permission).
+trusted_roles:
+  - administrator
+
+# Roles that are explicitly allowed to access /admin/* paths even when
+# admin_path_restriction is enabled (takes effect only in "custom" profile).
+admin_path_allowlist_roles: []
+
+# Whether to block /admin/* for roles not in trusted_roles.
+admin_path_restriction: true
+
+# Whether to disable the PHP filter module if it is currently enabled.
+disable_php_filter: true
+
+# Whether to hide Field UI routes from non-trusted roles.
+field_ui_restriction: true
+
+# Whether to restrict the Views UI to trusted roles only.
+views_ui_restriction: true
+
+# Comma-separated list of /admin/* sub-paths that are explicitly allowed for
+# all authenticated users regardless of the lockdown profile.
+# Example: /admin/content, /admin/user/login
+admin_path_exceptions:
+  - /admin/content
+  - /admin/content/files
+
+# Whether to write a watchdog entry for every blocked access attempt.
+audit_log_enabled: true

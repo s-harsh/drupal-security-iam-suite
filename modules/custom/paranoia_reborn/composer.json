@@ -1,0 +1,40 @@
+{
+  "name": "drupal/paranoia_reborn",
+  "type": "drupal-module",
+  "description": "Modern replacement for the abandoned Paranoia module. Provides configurable lockdown profiles, admin-path restrictions, PHP filter hardening, Field UI/Views UI protection, and audit logging.",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/paranoia_reborn",
+  "authors": [
+    {
+      "name": "Harshvardhan Soni",
+      "email": "harshvardhan.soni@xecurify.com",
+      "role": "Maintainer"
+    }
+  ],
+  "keywords": [
+    "drupal",
+    "security",
+    "iam",
+    "hardening",
+    "paranoia",
+    "admin",
+    "lockdown"
+  ],
+  "support": {
+    "issues": "https://github.com/s-harsh/drupal-security-iam-suite/issues",
+    "source": "https://github.com/s-harsh/drupal-security-iam-suite"
+  },
+  "require": {
+    "drupal/core": "^11"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^11"
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}

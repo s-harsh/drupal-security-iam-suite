@@ -1,0 +1,15 @@
+paranoia_reborn.settings:
+  path: '/admin/config/security/paranoia-reborn'
+  defaults:
+    _form: '\Drupal\paranoia_reborn\Form\ParanoiaRebornSettingsForm'
+    _title: 'Paranoia Reborn Settings'
+  requirements:
+    _permission: 'administer paranoia reborn'
+
+paranoia_reborn.audit_log:
+  path: '/admin/reports/paranoia-reborn-audit'
+  defaults:
+    _controller: '\Drupal\paranoia_reborn\Controller\AuditLogController::page'
+    _title: 'Paranoia Reborn Audit Log'
+  requirements:
+    _permission: 'administer paranoia reborn'
