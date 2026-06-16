@@ -1,0 +1,9 @@
+name: 'Passkey Forge'
+type: module
+description: 'Enterprise-grade FIDO2/WebAuthn Level 3 passkey authentication for Drupal 11. Supports platform and roaming authenticators, attestation policies, per-role enforcement, and full admin management of registered credentials.'
+core_version_requirement: ^11
+package: Security
+dependencies:
+  - drupal:user
+  - drupal:system
+configure: passkey_forge.settings

@@ -1,0 +1,43 @@
+passkey_forge.settings:
+  type: config_object
+  label: 'Passkey Forge settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Module enabled'
+    rp_id:
+      type: string
+      label: 'Relying Party ID (domain)'
+    rp_name:
+      type: string
+      label: 'Relying Party display name'
+    allowed_origins:
+      type: sequence
+      label: 'Allowed origins'
+      sequence:
+        type: string
+        label: 'Origin URL'
+    attestation_policy:
+      type: string
+      label: 'Default attestation policy (none, indirect, direct)'
+    timeout:
+      type: integer
+      label: 'WebAuthn ceremony timeout in milliseconds'
+    require_resident_key:
+      type: boolean
+      label: 'Require resident (discoverable) key'
+    user_verification:
+      type: string
+      label: 'User verification requirement (required, preferred, discouraged)'
+    enforce_for_roles:
+      type: sequence
+      label: 'Roles that must use a passkey'
+      sequence:
+        type: string
+        label: 'Role machine name'
+    allow_password_fallback:
+      type: boolean
+      label: 'Allow password fallback when no passkey registered'
+    challenge_ttl:
+      type: integer
+      label: 'Challenge TTL in seconds'

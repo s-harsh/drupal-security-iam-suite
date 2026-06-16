@@ -1,0 +1,6 @@
+passkey_forge.settings:
+  title: 'Passkey Forge'
+  description: 'Configure FIDO2/WebAuthn passkey authentication, attestation policies, and per-role enforcement.'
+  route_name: passkey_forge.settings
+  parent: system.admin_config_security
+  weight: 15

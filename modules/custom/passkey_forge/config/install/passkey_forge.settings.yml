@@ -1,0 +1,13 @@
+enabled: true
+rp_id: 'example.com'
+rp_name: 'My Drupal Site'
+allowed_origins:
+  - 'https://example.com'
+attestation_policy: 'none'
+timeout: 60000
+require_resident_key: false
+user_verification: 'preferred'
+enforce_for_roles:
+  - 'administrator'
+allow_password_fallback: true
+challenge_ttl: 300

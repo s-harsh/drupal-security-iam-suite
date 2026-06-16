@@ -1,0 +1,8 @@
+administer passkey forge:
+  title: 'Administer Passkey Forge'
+  description: 'Configure Passkey Forge settings, view all registered passkeys, and revoke individual credentials for any user.'
+  restrict access: true
+
+manage own passkeys:
+  title: 'Manage own passkeys'
+  description: 'Register new passkeys and remove existing passkeys for the current user account.'

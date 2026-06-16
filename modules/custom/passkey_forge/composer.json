@@ -1,0 +1,29 @@
+{
+  "name": "drupal/passkey_forge",
+  "description": "Enterprise-grade FIDO2/WebAuthn Level 3 passkey authentication for Drupal 11 with attestation policies, per-role enforcement, and full credential management.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11",
+    "web-auth/webauthn-lib": "^4.9",
+    "web-auth/cose-lib": "^4.2",
+    "web-auth/cbor-lib": "^0.2",
+    "lcobucci/jwt": "^5.0",
+    "spomky-labs/pki-framework": "^1.1"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^11"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\passkey_forge\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}

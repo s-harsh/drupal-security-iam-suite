@@ -1,0 +1,19 @@
+passkey_register:
+  version: '1.0.0'
+  js:
+    js/passkey-register.js:
+      minified: false
+  dependencies:
+    - core/drupalSettings
+    - core/drupal
+    - core/once
+
+passkey_authenticate:
+  version: '1.0.0'
+  js:
+    js/passkey-authenticate.js:
+      minified: false
+  dependencies:
+    - core/drupalSettings
+    - core/drupal
+    - core/once

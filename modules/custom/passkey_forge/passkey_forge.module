@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Passkey Forge module.
+ *
+ * Provides enterprise-grade FIDO2/WebAuthn Level 3 passkey authentication.
+ * All hook logic is delegated to the OOP hooks class via the Drupal 11
+ * #[Hook] attribute system. This file intentionally contains no procedural
+ * hook implementations.
+ */
+
+declare(strict_types=1);

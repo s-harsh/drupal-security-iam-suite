@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Passkey Forge module.
+ *
+ * Creates and tears down the passkey_forge_credentials database table that
+ * stores all registered FIDO2/WebAuthn credentials. Schema changes between
+ * module versions are implemented as hook_update_N() functions below.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the passkey_forge_credentials table. Each row represents one
+ * registered passkey credential bound to a Drupal user account.
+ */
+function passkey_forge_schema(): array {
+  return [
+    'passkey_forge_credentials' => [
+      'description' => 'Stores registered FIDO2/WebAuthn passkey credentials for Drupal user accounts.',
+      'fields' => [
+        'id' => [
+          'description' => 'Auto-increment surrogate primary key.',
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ],
+        'uid' => [
+          'description' => 'The {users}.uid of the credential owner.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ],
+        'credential_id' => [
+          'description' => 'Base64url-encoded credential ID as returned by the authenticator (up to 1024 bytes raw, stored as text).',
+          'type' => 'varchar',
+          'length' => 1400,
+          'not null' => TRUE,
+        ],
+        'public_key' => [
+          'description' => 'PEM-encoded COSE public key of the credential.',
+          'type' => 'text',
+          'size' => 'medium',
+          'not null' => TRUE,
+        ],
+        'aaguid' => [
+          'description' => 'Authenticator Attestation GUID (UUID string) identifying the authenticator model.',
+          'type' => 'varchar',
+          'length' => 36,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+        'sign_count' => [
+          'description' => 'Monotonically increasing signature counter used to detect cloned authenticators.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+        ],
+        'attestation_type' => [
+          'description' => 'Attestation type at registration time: none, indirect, or direct.',
+          'type' => 'varchar',
+          'length' => 16,
+          'not null' => TRUE,
+          'default' => 'none',
+        ],
+        'transports' => [
+          'description' => 'JSON-encoded array of authenticator transport hints (usb, nfc, ble, internal, hybrid).',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+        'label' => [
+          'description' => 'Human-readable label for the passkey, set by the user.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+        'revoked' => [
+          'description' => 'Boolean flag; 1 if the credential has been administratively revoked.',
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => TRUE,
+          'default' => 0,
+        ],
+        'created' => [
+          'description' => 'Unix timestamp when this credential was registered.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+        ],
+        'last_used' => [
+          'description' => 'Unix timestamp of the most recent successful authentication with this credential.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+      ],
+      'primary key' => ['id'],
+      'unique keys' => [
+        'credential_id' => ['credential_id'],
+      ],
+      'indexes' => [
+        'uid' => ['uid'],
+        'uid_revoked' => ['uid', 'revoked'],
+      ],
+      'foreign keys' => [
+        'credential_owner' => [
+          'table' => 'users',
+          'columns' => ['uid' => 'uid'],
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Drops the passkey_forge_credentials table on module uninstall. Configuration
+ * is removed automatically by the CMI system via config/install/.
+ */
+function passkey_forge_uninstall(): void {
+  \Drupal::database()->schema()->dropTable('passkey_forge_credentials');
+}

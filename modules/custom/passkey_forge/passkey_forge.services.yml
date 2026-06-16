@@ -1,0 +1,39 @@
+services:
+
+  logger.channel.passkey_forge:
+    parent: logger.channel_base
+    arguments: ['passkey_forge']
+
+  cache.passkey_forge:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [passkey_forge]
+
+  passkey_forge.webauthn:
+    class: Drupal\passkey_forge\Service\WebAuthnService
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.passkey_forge'
+
+  passkey_forge.attestation_validator:
+    class: Drupal\passkey_forge\Service\AttestationValidator
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.passkey_forge'
+
+  passkey_forge.storage:
+    class: Drupal\passkey_forge\Service\PasskeyStorage
+    arguments:
+      - '@database'
+      - '@logger.channel.passkey_forge'
+
+  passkey_forge.hooks:
+    class: Drupal\passkey_forge\Hook\PasskeyForgeHooks
+    arguments:
+      - '@config.factory'
+      - '@passkey_forge.storage'
+      - '@current_user'
+    tags:
+      - { name: drupal.hook }

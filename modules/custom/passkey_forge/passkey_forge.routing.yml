@@ -1,0 +1,72 @@
+passkey_forge.settings:
+  path: '/admin/config/security/passkey-forge'
+  defaults:
+    _form: '\Drupal\passkey_forge\Form\PasskeyForgeSettingsForm'
+    _title: 'Passkey Forge Settings'
+  requirements:
+    _permission: 'administer passkey forge'
+  options:
+    _admin_route: true
+
+passkey_forge.register:
+  path: '/user/{user}/passkeys/register'
+  defaults:
+    _form: '\Drupal\passkey_forge\Form\PasskeyManageForm'
+    _title: 'Manage Passkeys'
+  requirements:
+    _permission: 'manage own passkeys'
+    user: \d+
+  options:
+    _admin_route: false
+
+passkey_forge.register.challenge:
+  path: '/passkey-forge/register/challenge'
+  defaults:
+    _controller: '\Drupal\passkey_forge\Controller\PasskeyRegistrationController::challenge'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+
+passkey_forge.register.complete:
+  path: '/passkey-forge/register/complete'
+  defaults:
+    _controller: '\Drupal\passkey_forge\Controller\PasskeyRegistrationController::complete'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  methods: [POST]
+
+passkey_forge.auth.challenge:
+  path: '/passkey-forge/auth/challenge'
+  defaults:
+    _controller: '\Drupal\passkey_forge\Controller\PasskeyAuthController::challenge'
+  requirements:
+    _access: 'TRUE'
+
+passkey_forge.auth.complete:
+  path: '/passkey-forge/auth/complete'
+  defaults:
+    _controller: '\Drupal\passkey_forge\Controller\PasskeyAuthController::complete'
+  requirements:
+    _access: 'TRUE'
+  methods: [POST]
+
+passkey_forge.admin.user_keys:
+  path: '/admin/config/security/passkey-forge/users/{user}/keys'
+  defaults:
+    _controller: '\Drupal\passkey_forge\Controller\PasskeyAdminController::userKeys'
+    _title: 'User Passkeys'
+  requirements:
+    _permission: 'administer passkey forge'
+    user: \d+
+  options:
+    _admin_route: true
+
+passkey_forge.admin.revoke:
+  path: '/admin/config/security/passkey-forge/keys/{credential_id}/revoke'
+  defaults:
+    _controller: '\Drupal\passkey_forge\Controller\PasskeyAdminController::revoke'
+    _title: 'Revoke Passkey'
+  requirements:
+    _permission: 'administer passkey forge'
+  methods: [POST]
+  options:
+    _admin_route: true
