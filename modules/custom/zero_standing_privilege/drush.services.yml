@@ -1,0 +1,11 @@
+services:
+  zero_standing_privilege.drush_commands:
+    class: Drupal\zero_standing_privilege\Drush\Commands\ZspCommands
+    arguments:
+      - '@zero_standing_privilege.privilege_manager'
+      - '@zero_standing_privilege.approval_service'
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@logger.channel.zero_standing_privilege'
+    tags:
+      - { name: drush.command }

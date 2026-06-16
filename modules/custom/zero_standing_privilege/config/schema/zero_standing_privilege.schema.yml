@@ -1,0 +1,63 @@
+zero_standing_privilege.settings:
+  type: config_object
+  label: 'Zero Standing Privilege settings'
+  mapping:
+    require_approval:
+      type: boolean
+      label: 'Require approval for elevation requests'
+    auto_approve_roles:
+      type: sequence
+      label: 'Roles that receive automatic approval without manual review'
+      sequence:
+        type: string
+    approver_roles:
+      type: sequence
+      label: 'Roles whose members may approve elevation requests'
+      sequence:
+        type: string
+    approver_uids:
+      type: sequence
+      label: 'Specific user IDs designated as approvers'
+      sequence:
+        type: integer
+    max_elevation_minutes:
+      type: integer
+      label: 'Maximum allowed elevation duration in minutes (hard cap)'
+    default_elevation_minutes:
+      type: integer
+      label: 'Default elevation duration in minutes when requester does not specify'
+    allowed_target_roles:
+      type: sequence
+      label: 'Roles that may be requested as target elevation roles (empty = all)'
+      sequence:
+        type: string
+    notify_approvers_on_request:
+      type: boolean
+      label: 'Email approvers when a new elevation request is submitted'
+    notify_requester_on_grant:
+      type: boolean
+      label: 'Email requester when their elevation is approved and granted'
+    notify_requester_on_deny:
+      type: boolean
+      label: 'Email requester when their elevation is denied'
+    notify_requester_on_expiry:
+      type: boolean
+      label: 'Email requester when their elevation expires'
+    from_email:
+      type: string
+      label: 'From email address for ZSP notifications (blank = site default)'
+    from_name:
+      type: string
+      label: 'From display name for ZSP notifications'
+    site_name_in_email:
+      type: boolean
+      label: 'Prepend site name to email subject lines'
+    revocation_token_enabled:
+      type: boolean
+      label: 'Include a one-click revocation link in approval notification emails'
+    revocation_token_ttl:
+      type: integer
+      label: 'Revocation token validity in seconds'
+    audit_retention_days:
+      type: integer
+      label: 'Number of days to retain audit log entries (0 = retain forever)'

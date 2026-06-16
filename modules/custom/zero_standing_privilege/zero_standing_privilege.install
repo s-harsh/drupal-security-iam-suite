@@ -1,0 +1,59 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Install, update and uninstall functions for Zero Standing Privilege module.
+ */
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the elevation_request entity base table. ContentEntityBase will also
+ * generate this via entity type annotation, but we provide an explicit
+ * hook_schema() so Drush can run schema:dump and migrations can reference it.
+ */
+function zero_standing_privilege_schema(): array {
+  // ContentEntityBase handles its own table creation via entity type
+  // definition. No custom table needed here; the entity system will create
+  // zero_standing_privilege_request automatically on install.
+  return [];
+}
+
+/**
+ * Implements hook_install().
+ *
+ * Installs the entity schema for ElevationRequest.
+ */
+function zero_standing_privilege_install(): void {
+  \Drupal::entityDefinitionUpdateManager()->installEntityType(
+    \Drupal::entityTypeManager()->getDefinition('elevation_request')
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Removes entity schema and configuration.
+ */
+function zero_standing_privilege_uninstall(): void {
+  // Drop the entity storage table.
+  try {
+    \Drupal::entityDefinitionUpdateManager()->uninstallEntityType(
+      \Drupal::entityTypeManager()->getDefinition('elevation_request')
+    );
+  }
+  catch (\Exception $e) {
+    // Table may already be gone; log and continue.
+    \Drupal::logger('zero_standing_privilege')->warning(
+      'Could not uninstall entity type elevation_request: @msg',
+      ['@msg' => $e->getMessage()]
+    );
+  }
+
+  // Remove all module configuration.
+  \Drupal::configFactory()->getEditable('zero_standing_privilege.settings')->delete();
+}

@@ -1,0 +1,22 @@
+{
+  "name": "drupal/zero_standing_privilege",
+  "description": "First open-source JIT Privileged Access Management (PAM) for Drupal. Provides time-bounded role elevation with approval workflow, automatic revocation, and a full audit trail.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11 || ^10.4"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Drupal\\zero_standing_privilege\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}

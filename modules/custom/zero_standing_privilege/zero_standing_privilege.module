@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @file
+ * Zero Standing Privilege module — minimal procedural stub.
+ *
+ * All hook implementations live in the OOP hook class
+ * \Drupal\zero_standing_privilege\Hook\ZeroStandingPrivilegeHooks, discovered
+ * via the drupal.hook service tag in zero_standing_privilege.services.yml.
+ */
+
+declare(strict_types=1);

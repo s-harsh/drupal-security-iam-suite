@@ -1,0 +1,18 @@
+require_approval: true
+auto_approve_roles: []
+approver_roles:
+  - administrator
+approver_uids: []
+max_elevation_minutes: 240
+default_elevation_minutes: 60
+allowed_target_roles: []
+notify_approvers_on_request: true
+notify_requester_on_grant: true
+notify_requester_on_deny: true
+notify_requester_on_expiry: true
+from_email: ''
+from_name: 'Zero Standing Privilege'
+site_name_in_email: true
+revocation_token_enabled: true
+revocation_token_ttl: 86400
+audit_retention_days: 365

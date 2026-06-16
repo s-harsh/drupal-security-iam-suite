@@ -1,0 +1,44 @@
+services:
+  zero_standing_privilege.privilege_manager:
+    class: Drupal\zero_standing_privilege\Service\PrivilegeManager
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@logger.channel.zero_standing_privilege'
+      - '@current_user'
+      - '@database'
+      - '@zero_standing_privilege.elevation_notifier'
+    tags:
+      - { name: service_collector }
+
+  zero_standing_privilege.approval_service:
+    class: Drupal\zero_standing_privilege\Service\ApprovalService
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@logger.channel.zero_standing_privilege'
+      - '@zero_standing_privilege.privilege_manager'
+      - '@zero_standing_privilege.elevation_notifier'
+
+  zero_standing_privilege.elevation_notifier:
+    class: Drupal\zero_standing_privilege\Service\ElevationNotifier
+    arguments:
+      - '@plugin.manager.mail'
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@logger.channel.zero_standing_privilege'
+      - '@language_manager'
+
+  logger.channel.zero_standing_privilege:
+    parent: logger.channel_base
+    arguments: ['zero_standing_privilege']
+
+  zero_standing_privilege.hooks:
+    class: Drupal\zero_standing_privilege\Hook\ZeroStandingPrivilegeHooks
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.zero_standing_privilege'
+      - '@zero_standing_privilege.privilege_manager'
+      - '@current_user'
+    tags:
+      - { name: drupal.hook }

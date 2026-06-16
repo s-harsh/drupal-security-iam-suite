@@ -1,0 +1,8 @@
+name: 'Zero Standing Privilege'
+type: module
+description: 'First open-source JIT Privileged Access Management (PAM) for Drupal. Users request temporary role elevation with approval workflow, time-bounded grants, automatic revocation, and a full audit trail.'
+core_version_requirement: ^11 || ^10.4
+package: Security
+dependencies:
+  - drupal:user
+configure: zero_standing_privilege.settings

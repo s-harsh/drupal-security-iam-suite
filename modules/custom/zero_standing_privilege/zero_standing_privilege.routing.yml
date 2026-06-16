@@ -1,0 +1,98 @@
+zero_standing_privilege.settings:
+  path: '/admin/config/security/zero-standing-privilege'
+  defaults:
+    _form: '\Drupal\zero_standing_privilege\Form\ZspSettingsForm'
+    _title: 'Zero Standing Privilege Settings'
+  requirements:
+    _permission: 'administer zero standing privilege'
+  options:
+    _admin_route: true
+
+zero_standing_privilege.request:
+  path: '/zsp/request'
+  defaults:
+    _form: '\Drupal\zero_standing_privilege\Form\ElevationRequestForm'
+    _title: 'Request Temporary Role Elevation'
+  requirements:
+    _permission: 'request privilege elevation'
+
+zero_standing_privilege.my_requests:
+  path: '/zsp/my-requests'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ElevationRequestController::myRequests'
+    _title: 'My Elevation Requests'
+  requirements:
+    _permission: 'request privilege elevation'
+
+zero_standing_privilege.view:
+  path: '/zsp/request/{elevation_request}'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ElevationRequestController::view'
+    _title: 'Elevation Request Detail'
+  requirements:
+    _permission: 'request privilege elevation'
+    elevation_request: \d+
+
+zero_standing_privilege.revoke:
+  path: '/zsp/request/{elevation_request}/revoke'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ElevationRequestController::revoke'
+    _title: 'Revoke Elevation'
+  requirements:
+    _permission: 'request privilege elevation'
+    elevation_request: \d+
+  methods: [POST]
+
+zero_standing_privilege.approval_queue:
+  path: '/admin/config/security/zero-standing-privilege/queue'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ApprovalQueueController::queue'
+    _title: 'Elevation Approval Queue'
+  requirements:
+    _permission: 'approve privilege elevation'
+  options:
+    _admin_route: true
+
+zero_standing_privilege.approve:
+  path: '/admin/config/security/zero-standing-privilege/queue/{elevation_request}/approve'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ApprovalQueueController::approve'
+    _title: 'Approve Elevation Request'
+  requirements:
+    _permission: 'approve privilege elevation'
+    elevation_request: \d+
+  options:
+    _admin_route: true
+  methods: [POST]
+
+zero_standing_privilege.deny:
+  path: '/admin/config/security/zero-standing-privilege/queue/{elevation_request}/deny'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ApprovalQueueController::deny'
+    _title: 'Deny Elevation Request'
+  requirements:
+    _permission: 'approve privilege elevation'
+    elevation_request: \d+
+  options:
+    _admin_route: true
+  methods: [POST]
+
+zero_standing_privilege.active_elevations:
+  path: '/admin/config/security/zero-standing-privilege/active'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ApprovalQueueController::activeElevations'
+    _title: 'Active Elevations'
+  requirements:
+    _permission: 'administer zero standing privilege'
+  options:
+    _admin_route: true
+
+zero_standing_privilege.audit_log:
+  path: '/admin/config/security/zero-standing-privilege/audit'
+  defaults:
+    _controller: '\Drupal\zero_standing_privilege\Controller\ApprovalQueueController::auditLog'
+    _title: 'Privilege Elevation Audit Log'
+  requirements:
+    _permission: 'administer zero standing privilege'
+  options:
+    _admin_route: true

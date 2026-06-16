@@ -1,0 +1,41 @@
+zero_standing_privilege.settings:
+  title: 'Zero Standing Privilege'
+  description: 'Configure JIT PAM settings, approval workflow, and elevation time limits.'
+  parent: system.admin_config_security
+  route_name: zero_standing_privilege.settings
+  weight: 20
+
+zero_standing_privilege.approval_queue:
+  title: 'Approval Queue'
+  description: 'Review and action pending privilege elevation requests.'
+  parent: zero_standing_privilege.settings
+  route_name: zero_standing_privilege.approval_queue
+  weight: 10
+
+zero_standing_privilege.active_elevations:
+  title: 'Active Elevations'
+  description: 'View currently active (approved and not yet expired) role elevations.'
+  parent: zero_standing_privilege.settings
+  route_name: zero_standing_privilege.active_elevations
+  weight: 20
+
+zero_standing_privilege.audit_log:
+  title: 'Audit Log'
+  description: 'Full audit trail of all privilege elevation requests and outcomes.'
+  parent: zero_standing_privilege.settings
+  route_name: zero_standing_privilege.audit_log
+  weight: 30
+
+zero_standing_privilege.request:
+  title: 'Request Elevation'
+  description: 'Submit a request for temporary privilege elevation.'
+  parent: user.page
+  route_name: zero_standing_privilege.request
+  weight: 10
+
+zero_standing_privilege.my_requests:
+  title: 'My Elevation Requests'
+  description: 'View your privilege elevation request history.'
+  parent: user.page
+  route_name: zero_standing_privilege.my_requests
+  weight: 20

@@ -1,0 +1,13 @@
+administer zero standing privilege:
+  title: 'Administer Zero Standing Privilege'
+  description: 'Configure ZSP settings, view audit log, manage active elevations, and revoke any grant.'
+  restrict access: true
+
+approve privilege elevation:
+  title: 'Approve privilege elevation requests'
+  description: 'View the approval queue and approve or deny pending elevation requests.'
+  restrict access: true
+
+request privilege elevation:
+  title: 'Request privilege elevation'
+  description: 'Submit a request for temporary role elevation via the JIT PAM workflow.'
