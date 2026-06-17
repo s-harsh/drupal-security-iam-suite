@@ -1,0 +1,9 @@
+name: 'SCIM Bridge'
+type: module
+description: 'RFC 7644 SCIM 2.0 server for Drupal. Enables Okta, Azure AD, and Google Workspace to provision and deprovision users and groups via the SCIM protocol with Bearer token authentication.'
+core_version_requirement: ^11
+package: Security
+dependencies:
+  - drupal:user
+  - drupal:system
+configure: scim_bridge.settings

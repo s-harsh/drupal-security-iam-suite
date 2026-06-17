@@ -1,0 +1,18 @@
+# SCIM attribute → Drupal field mapping.
+# Keys are SCIM attribute paths (dot notation for nested, e.g. name.formatted).
+# Values are Drupal user field machine names.
+user_attribute_map:
+  userName: name
+  'emails[0].value': mail
+  displayName: field_display_name
+  'name.givenName': field_first_name
+  'name.familyName': field_last_name
+  'phoneNumbers[0].value': field_phone
+  title: field_job_title
+  'addresses[0].locality': field_city
+  'addresses[0].country': field_country
+  active: status
+  externalId: field_scim_external_id
+# Group (SCIM displayName) → Drupal role machine name.
+# Leave empty to disable group provisioning.
+group_role_map: {}

@@ -1,0 +1,37 @@
+services:
+
+  logger.channel.scim_bridge:
+    parent: logger.channel_base
+    arguments: ['scim_bridge']
+
+  scim_bridge.authenticator:
+    class: Drupal\scim_bridge\Service\ScimAuthenticator
+    arguments:
+      - '@config.factory'
+      - '@logger.channel.scim_bridge'
+
+  scim_bridge.filter_parser:
+    class: Drupal\scim_bridge\Service\ScimFilterParser
+
+  scim_bridge.user_mapper:
+    class: Drupal\scim_bridge\Service\ScimUserMapper
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@logger.channel.scim_bridge'
+      - '@scim_bridge.filter_parser'
+      - '@password_generator'
+
+  scim_bridge.group_mapper:
+    class: Drupal\scim_bridge\Service\ScimGroupMapper
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@logger.channel.scim_bridge'
+
+  scim_bridge.hooks:
+    class: Drupal\scim_bridge\Hook\ScimBridgeHooks
+    arguments:
+      - '@config.factory'
+    tags:
+      - { name: drupal.hook }

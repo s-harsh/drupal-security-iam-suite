@@ -1,0 +1,14 @@
+enabled: true
+# Bearer tokens for each IdP. Each entry is a keyed map:
+#   label: Human-readable IdP name shown in admin UI and sync log.
+#   token: Hashed bearer token (SHA-256 hex). Store raw token only in IdP.
+#   enabled: Whether this token is currently accepted.
+idp_tokens: []
+# Conflict handling: 'skip' leaves existing user unchanged, 'update' merges.
+conflict_strategy: skip
+# Maximum page size returned for list operations. IdP can request less.
+max_page_size: 100
+# Append sync log entries to the DB table. Disable only for high-traffic sites.
+sync_log_enabled: true
+# Number of days to retain sync log entries (0 = retain forever).
+sync_log_retention_days: 90

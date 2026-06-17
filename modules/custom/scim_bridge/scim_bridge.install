@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the SCIM Bridge module.
+ *
+ * Creates the scim_bridge_sync_log database table on install and drops it on
+ * uninstall. hook_requirements() is handled by the OOP hooks class via the
+ * Drupal 11 #[Hook] attribute system in ScimBridgeHooks.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the sync_log table used to record all SCIM provisioning operations
+ * for audit, debugging, and conflict resolution purposes.
+ */
+function scim_bridge_schema(): array {
+  return [
+    'scim_bridge_sync_log' => [
+      'description' => 'Audit log of all SCIM provisioning operations.',
+      'fields' => [
+        'id' => [
+          'description' => 'Auto-increment primary key.',
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+        ],
+        'timestamp' => [
+          'description' => 'Unix timestamp when the operation occurred.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'default' => 0,
+        ],
+        'operation' => [
+          'description' => 'SCIM operation type: create, update, patch, delete, list, get.',
+          'type' => 'varchar',
+          'length' => 16,
+          'not null' => TRUE,
+          'default' => '',
+        ],
+        'resource_type' => [
+          'description' => 'SCIM resource type: User or Group.',
+          'type' => 'varchar',
+          'length' => 16,
+          'not null' => TRUE,
+          'default' => '',
+        ],
+        'scim_id' => [
+          'description' => 'The SCIM externalId or Drupal entity ID used in this operation.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+        'drupal_id' => [
+          'description' => 'Drupal entity ID (uid or role machine name) affected.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+        'http_status' => [
+          'description' => 'HTTP status code returned to the IdP.',
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'size' => 'small',
+          'not null' => TRUE,
+          'default' => 0,
+        ],
+        'idp_label' => [
+          'description' => 'Human-readable label of the IdP that issued the request.',
+          'type' => 'varchar',
+          'length' => 128,
+          'not null' => FALSE,
+          'default' => NULL,
+        ],
+        'detail' => [
+          'description' => 'Optional detail message or error description.',
+          'type' => 'text',
+          'not null' => FALSE,
+        ],
+      ],
+      'primary key' => ['id'],
+      'indexes' => [
+        'timestamp_idx' => ['timestamp'],
+        'operation_idx' => ['operation'],
+        'resource_type_idx' => ['resource_type'],
+        'drupal_id_idx' => ['drupal_id'],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Removes all configuration objects and drops the sync log table.
+ */
+function scim_bridge_uninstall(): void {
+  \Drupal::configFactory()->getEditable('scim_bridge.settings')->delete();
+  \Drupal::configFactory()->getEditable('scim_bridge.mapping')->delete();
+}

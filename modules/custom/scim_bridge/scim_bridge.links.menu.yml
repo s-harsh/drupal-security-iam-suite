@@ -1,0 +1,13 @@
+scim_bridge.settings:
+  title: 'SCIM Bridge'
+  description: 'Configure the SCIM 2.0 provisioning bridge for Okta, Azure AD, and Google Workspace.'
+  parent: system.admin_config_security
+  route_name: scim_bridge.settings
+  weight: 10
+
+scim_bridge.mapping:
+  title: 'SCIM Attribute Mapping'
+  description: 'Configure how SCIM attributes map to Drupal user fields and roles.'
+  parent: scim_bridge.settings
+  route_name: scim_bridge.mapping
+  weight: 10

@@ -1,0 +1,4 @@
+administer scim bridge:
+  title: 'Administer SCIM Bridge'
+  description: 'Configure SCIM Bridge settings, manage IdP tokens, and view sync logs.'
+  restrict access: true

@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * SCIM Bridge module.
+ *
+ * Implements an RFC 7644 SCIM 2.0 server that enables Okta, Azure AD, and
+ * Google Workspace to provision Drupal users and roles via Bearer token
+ * authenticated REST endpoints. All hook logic is delegated to the OOP hooks
+ * class via the Drupal 11 #[Hook] attribute system.
+ */
+
+declare(strict_types=1);

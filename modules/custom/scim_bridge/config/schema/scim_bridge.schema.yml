@@ -1,0 +1,52 @@
+scim_bridge.settings:
+  type: config_object
+  label: 'SCIM Bridge settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Module enabled'
+    idp_tokens:
+      type: sequence
+      label: 'IdP token entries'
+      sequence:
+        type: mapping
+        label: 'IdP token entry'
+        mapping:
+          label:
+            type: string
+            label: 'IdP label'
+          token:
+            type: string
+            label: 'SHA-256 hashed bearer token'
+          enabled:
+            type: boolean
+            label: 'Token enabled'
+    conflict_strategy:
+      type: string
+      label: 'Conflict strategy (skip or update)'
+    max_page_size:
+      type: integer
+      label: 'Maximum list page size'
+    sync_log_enabled:
+      type: boolean
+      label: 'Sync log enabled'
+    sync_log_retention_days:
+      type: integer
+      label: 'Sync log retention in days'
+
+scim_bridge.mapping:
+  type: config_object
+  label: 'SCIM Bridge attribute mapping'
+  mapping:
+    user_attribute_map:
+      type: sequence
+      label: 'User attribute mapping'
+      sequence:
+        type: string
+        label: 'Drupal field name'
+    group_role_map:
+      type: sequence
+      label: 'Group to role mapping'
+      sequence:
+        type: string
+        label: 'Drupal role machine name'

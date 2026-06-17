@@ -1,0 +1,25 @@
+{
+  "name": "drupal/scim_bridge",
+  "description": "RFC 7644 SCIM 2.0 server for Drupal — enables Okta, Azure AD, and Google Workspace to provision users and roles via Bearer token authenticated REST endpoints.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "drupal/core-dev": "^11"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\scim_bridge\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^12"
+      }
+    }
+  }
+}

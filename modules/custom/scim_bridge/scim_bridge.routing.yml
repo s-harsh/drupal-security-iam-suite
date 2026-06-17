@@ -1,0 +1,113 @@
+# ---------------------------------------------------------------------------
+# SCIM 2.0 Protocol Endpoints
+# ---------------------------------------------------------------------------
+
+scim_bridge.users_collection:
+  path: '/scim/v2/Users'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimUsersController::collection'
+    _title: 'SCIM Users'
+  methods: [GET, POST]
+  requirements:
+    _custom_access: '\Drupal\scim_bridge\Controller\ScimUsersController::access'
+  options:
+    _auth: []
+    no_cache: true
+
+scim_bridge.users_item:
+  path: '/scim/v2/Users/{id}'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimUsersController::item'
+    _title: 'SCIM User'
+  methods: [GET, PUT, PATCH, DELETE]
+  requirements:
+    _custom_access: '\Drupal\scim_bridge\Controller\ScimUsersController::access'
+    id: '[^/]+'
+  options:
+    _auth: []
+    no_cache: true
+
+scim_bridge.groups_collection:
+  path: '/scim/v2/Groups'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimGroupsController::collection'
+    _title: 'SCIM Groups'
+  methods: [GET, POST]
+  requirements:
+    _custom_access: '\Drupal\scim_bridge\Controller\ScimGroupsController::access'
+  options:
+    _auth: []
+    no_cache: true
+
+scim_bridge.groups_item:
+  path: '/scim/v2/Groups/{id}'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimGroupsController::item'
+    _title: 'SCIM Group'
+  methods: [GET, PUT, PATCH, DELETE]
+  requirements:
+    _custom_access: '\Drupal\scim_bridge\Controller\ScimGroupsController::access'
+    id: '[^/]+'
+  options:
+    _auth: []
+    no_cache: true
+
+scim_bridge.service_provider_config:
+  path: '/scim/v2/ServiceProviderConfig'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimServiceProviderController::serviceProviderConfig'
+    _title: 'SCIM ServiceProviderConfig'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+  options:
+    _auth: []
+    no_cache: true
+
+scim_bridge.resource_types:
+  path: '/scim/v2/ResourceTypes'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimServiceProviderController::resourceTypes'
+    _title: 'SCIM ResourceTypes'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+  options:
+    _auth: []
+    no_cache: true
+
+scim_bridge.schemas:
+  path: '/scim/v2/Schemas'
+  defaults:
+    _controller: '\Drupal\scim_bridge\Controller\ScimServiceProviderController::schemas'
+    _title: 'SCIM Schemas'
+  methods: [GET]
+  requirements:
+    _access: 'TRUE'
+  options:
+    _auth: []
+    no_cache: true
+
+# ---------------------------------------------------------------------------
+# Admin UI Routes
+# ---------------------------------------------------------------------------
+
+scim_bridge.settings:
+  path: '/admin/config/security/scim-bridge'
+  defaults:
+    _form: '\Drupal\scim_bridge\Form\ScimBridgeSettingsForm'
+    _title: 'SCIM Bridge Settings'
+  requirements:
+    _permission: 'administer scim bridge'
+  options:
+    _admin_route: true
+
+scim_bridge.mapping:
+  path: '/admin/config/security/scim-bridge/mapping'
+  defaults:
+    _form: '\Drupal\scim_bridge\Form\ScimMappingForm'
+    _title: 'SCIM Attribute Mapping'
+  requirements:
+    _permission: 'administer scim bridge'
+  options:
+    _admin_route: true
